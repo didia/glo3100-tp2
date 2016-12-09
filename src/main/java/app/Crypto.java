@@ -11,6 +11,10 @@ public class Crypto {
 	return Base64.encodeBase64String(DigestUtils.sha1(message));
     }
 
+    public String h2(String message) {
+	return Base64.encodeBase64String(DigestUtils.md5(message));
+    }
+
     public String random5Digits() {
 	return new Integer(ThreadLocalRandom.current().nextInt(0, 100000)).toString();
     }

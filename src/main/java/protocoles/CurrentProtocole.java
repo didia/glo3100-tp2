@@ -47,6 +47,7 @@ public class CurrentProtocole implements Protocole {
 	    currentProtocole = new MotDePasseProtocole(serveurController, clientController, pirateController, crypto);
 	    break;
 	case NTLM_V2:
+	    currentProtocole = new NTLMProtocole(serveurController, clientController, pirateController, crypto);
 	    break;
 	case UAF:
 	    break;

@@ -50,6 +50,10 @@ public class ServeurController {
 	envoyerDernierMessageRecu(EtapeProtocole.A2);
     }
 
+    public void executeA4() {
+	envoyerDernierMessageRecu(EtapeProtocole.A4);
+    }
+
     public void executeT2() {
 	envoyerDernierMessageRecu(EtapeProtocole.T2);
     }

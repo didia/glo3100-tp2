@@ -49,10 +49,7 @@ public class ServeurUI extends JPanel {
 	addE2Button();
 	addA2Button();
 	addT2Button();
-
-	JButton a4Button = new JButton("A4");
-	a4Button.setBounds(208, 66, 61, 29);
-	add(a4Button);
+	addA4Button();
 
 	JButton t4Button = new JButton("T4");
 	t4Button.addActionListener(new ActionListener() {
@@ -72,6 +69,18 @@ public class ServeurUI extends JPanel {
 	informationsPane.setContentType("text/html");
 	informationsPane.setBounds(6, 129, 490, 63);
 	add(informationsPane);
+
+    }
+
+    private void addA4Button() {
+	JButton a4Button = new JButton("A4");
+	a4Button.setBounds(208, 66, 61, 29);
+	a4Button.addActionListener(new ActionListener() {
+	    public void actionPerformed(ActionEvent e) {
+		serveurController.executeA4();
+	    }
+	});
+	add(a4Button);
 
     }
 

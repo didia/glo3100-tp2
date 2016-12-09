@@ -17,6 +17,8 @@ import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.FormSpecs;
 import com.jgoodies.forms.layout.RowSpec;
 
+import app.ProtocoleTypes;
+
 public class ClientUI extends JPanel {
 
     /**
@@ -59,14 +61,7 @@ public class ClientUI extends JPanel {
 	addbtnE1();
 	addbtnA1();
 	addbtnT1();
-
-	JButton btnA3 = new JButton("A3");
-	btnA3.addActionListener(new ActionListener() {
-	    public void actionPerformed(ActionEvent e) {
-	    }
-	});
-	btnA3.setBounds(208, 66, 61, 29);
-	add(btnA3);
+	addbtnA3();
 
 	JButton btnT3 = new JButton("T3");
 	btnT3.addActionListener(new ActionListener() {
@@ -147,6 +142,18 @@ public class ClientUI extends JPanel {
 	add(informationsPane);
     }
 
+    private void addbtnA3() {
+	JButton btnA3 = new JButton("A3");
+	btnA3.addActionListener(new ActionListener() {
+	    public void actionPerformed(ActionEvent e) {
+		clientController.executeA3(fieldMotDePasse.getText());
+	    }
+	});
+	btnA3.setBounds(208, 66, 61, 29);
+	add(btnA3);
+
+    }
+
     private void addbtnE1() {
 	JButton btnE1 = new JButton("E1");
 	btnE1.addActionListener(new ActionListener() {
@@ -187,17 +194,31 @@ public class ClientUI extends JPanel {
     private void buildProtocolChoiceButton(JPanel panel_1) {
 	ButtonGroup group = new ButtonGroup();
 
+	ActionListener btnListener = new ActionListener() {
+	    public void actionPerformed(ActionEvent e) {
+		clientController.changeProtocole(ProtocoleTypes.valueOf(e.getActionCommand()));
+	    }
+	};
+
 	JRadioButton btnUAF = new JRadioButton("UAF");
 	btnUAF.setBounds(6, 34, 141, 23);
+	btnUAF.setActionCommand(ProtocoleTypes.UAF.toString());
+	btnUAF.addActionListener(btnListener);
 	group.add(btnUAF);
 	panel_1.add(btnUAF);
 
 	JRadioButton btnNTLM = new JRadioButton("NTLM v2");
 	btnNTLM.setBounds(6, 57, 141, 23);
+	btnNTLM.setActionCommand(ProtocoleTypes.NTLM_V2.toString());
+	btnNTLM.addActionListener(btnListener);
 	group.add(btnNTLM);
 	panel_1.add(btnNTLM);
+
 	JRadioButton btnMotDePasse = new JRadioButton("Mot de passe");
 	btnMotDePasse.setBounds(6, 81, 141, 23);
+	btnMotDePasse.setActionCommand(ProtocoleTypes.MOT_DE_PASSE.toString());
+	btnMotDePasse.addActionListener(btnListener);
+	btnMotDePasse.setSelected(true);
 	group.add(btnMotDePasse);
 	panel_1.add(btnMotDePasse);
 

@@ -1,32 +1,20 @@
 package protocoles;
 
-import java.util.HashMap;
 import java.util.Optional;
 
 import app.Crypto;
 import app.EtapeProtocole;
-import app.Protocole;
 import app.ProtocoleTypes;
 import client.ClientController;
 import pirate.PirateController;
 import serveur.Client;
 import serveur.ServeurController;
 
-public class MotDePasseProtocole implements Protocole {
-
-    private ClientController client;
-    private ServeurController serveur;
-    private Crypto crypto;
-    private PirateController pirate;
-
-    private HashMap<String, String> sessionMap = new HashMap<String, String>();
+public class MotDePasseProtocole extends BaseProtocole {
 
     public MotDePasseProtocole(ServeurController serveur, ClientController client, PirateController pirate,
 	    Crypto crypto) {
-	this.client = client;
-	this.serveur = serveur;
-	this.crypto = crypto;
-	this.pirate = pirate;
+	super(serveur, client, pirate, crypto);
     }
 
     public void executeEtape(EtapeProtocole etape, String message) {

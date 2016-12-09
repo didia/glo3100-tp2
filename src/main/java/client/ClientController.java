@@ -3,6 +3,7 @@ package client;
 import java.util.HashMap;
 
 import app.EtapeProtocole;
+import app.ProtocoleTypes;
 import protocoles.CurrentProtocole;
 
 public class ClientController {
@@ -22,8 +23,8 @@ public class ClientController {
 	protocole.executeEtape(EtapeProtocole.A1, String.format("%s %s", userID, pwd));
     }
 
-    public void executeA3() {
-
+    public void executeA3(String pwd) {
+	protocole.executeEtape(EtapeProtocole.A3, pwd);
     }
 
     public void executeT1(String transaction) {
@@ -34,8 +35,8 @@ public class ClientController {
 
     }
 
-    public void changerProtocole() {
-
+    public void changeProtocole(ProtocoleTypes protocoleType) {
+	protocole.setProtocoleTypes(protocoleType);
     }
 
     public void afficherTrousseCles() {
@@ -52,6 +53,10 @@ public class ClientController {
 
     public void recoisMessage(String message) {
 
+    }
+
+    public void supprimeToutCookies() {
+	cookies.clear();
     }
 
 }
