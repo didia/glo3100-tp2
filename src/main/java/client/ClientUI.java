@@ -2,6 +2,7 @@ package client;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
@@ -18,6 +19,7 @@ import com.jgoodies.forms.layout.FormSpecs;
 import com.jgoodies.forms.layout.RowSpec;
 
 import app.ProtocoleTypes;
+import app.User;
 
 public class ClientUI extends JPanel {
 
@@ -30,6 +32,7 @@ public class ClientUI extends JPanel {
     private JTextField fieldMotDePasse;
     private JTextField transactionField;
     private ClientController clientController;
+    private JTextPane informationsPane;
 
     public ClientUI(ClientController controller) {
 	this();
@@ -62,18 +65,12 @@ public class ClientUI extends JPanel {
 	addbtnA1();
 	addbtnT1();
 	addbtnA3();
-
-	JButton btnT3 = new JButton("T3");
-	btnT3.addActionListener(new ActionListener() {
-	    public void actionPerformed(ActionEvent e) {
-	    }
-	});
-	btnT3.setBounds(316, 66, 61, 29);
-	add(btnT3);
+	addbtnT3();
 
 	JButton btnTrousseCles = new JButton("trousse de clés");
 	btnTrousseCles.addActionListener(new ActionListener() {
 	    public void actionPerformed(ActionEvent e) {
+		afficheClients();
 	    }
 	});
 	btnTrousseCles.setBounds(572, 191, 122, 29);
@@ -137,9 +134,21 @@ public class ClientUI extends JPanel {
 	panel_1.add(transactionField);
 	transactionField.setColumns(10);
 
-	JTextPane informationsPane = new JTextPane();
+	informationsPane = new JTextPane();
+	informationsPane.setContentType("text/html");
 	informationsPane.setBounds(6, 300, 688, 57);
 	add(informationsPane);
+    }
+
+    private void addbtnT3() {
+	JButton btnT3 = new JButton("T3");
+	btnT3.addActionListener(new ActionListener() {
+	    public void actionPerformed(ActionEvent e) {
+		clientController.executeT3(fieldMotDePasse.getText());
+	    }
+	});
+	btnT3.setBounds(316, 66, 61, 29);
+	add(btnT3);
     }
 
     private void addbtnA3() {
@@ -222,5 +231,20 @@ public class ClientUI extends JPanel {
 	group.add(btnMotDePasse);
 	panel_1.add(btnMotDePasse);
 
+    }
+
+    public void afficheClients() {
+	List<User> users = this.clientController.getTrousseCles(fieldMotDePasse.getText());
+	StringBuilder htmlContent = new StringBuilder();
+	htmlContent.append(
+		"<html><body><table><thead><tr><th> Serveur </th><th> UserID </th> <th> Private Key</th></tr></thead><tbody>");
+	for (User user : users) {
+	    htmlContent.append(
+		    String.format("<tr><td>%s</td><td>%s</td><td>%s</td></tr>", "S", user.userId, user.passKey));
+	}
+	htmlContent.append("</tbody></table></body></html>");
+	informationsPane.removeAll();
+	informationsPane.setText(htmlContent.toString());
+	informationsPane.revalidate();
     }
 }

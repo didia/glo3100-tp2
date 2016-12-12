@@ -9,6 +9,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextPane;
 
+import app.User;
+
 public class ServeurUI extends JPanel {
 
     /**
@@ -50,14 +52,7 @@ public class ServeurUI extends JPanel {
 	addA2Button();
 	addT2Button();
 	addA4Button();
-
-	JButton t4Button = new JButton("T4");
-	t4Button.addActionListener(new ActionListener() {
-	    public void actionPerformed(ActionEvent e) {
-	    }
-	});
-	t4Button.setBounds(316, 66, 61, 29);
-	add(t4Button);
+	addT4Button();
 
 	addClientsButton();
 
@@ -70,6 +65,17 @@ public class ServeurUI extends JPanel {
 	informationsPane.setBounds(6, 129, 490, 63);
 	add(informationsPane);
 
+    }
+
+    private void addT4Button() {
+	JButton t4Button = new JButton("T4");
+	t4Button.addActionListener(new ActionListener() {
+	    public void actionPerformed(ActionEvent e) {
+		serveurController.executeT4();
+	    }
+	});
+	t4Button.setBounds(316, 66, 61, 29);
+	add(t4Button);
     }
 
     private void addA4Button() {
@@ -129,13 +135,13 @@ public class ServeurUI extends JPanel {
 	add(t2Button);
     }
 
-    public void afficheClients(List<Client> clients) {
+    public void afficheClients(List<User> users) {
 	StringBuilder htmlContent = new StringBuilder();
 	htmlContent.append(
 		"<html><body><table><thead><tr><th> UserID </th><th> Nom </th> <th> Passkey </th></tr></thead><tbody>");
-	for (Client client : clients) {
-	    htmlContent.append(String.format("<tr><td>%s</td><td>%s</td><td>%s</td></tr>", client.userId, client.name,
-		    client.passKey));
+	for (User user : users) {
+	    htmlContent.append(
+		    String.format("<tr><td>%s</td><td>%s</td><td>%s</td></tr>", user.userId, user.name, user.passKey));
 	}
 	htmlContent.append("</tbody></table></body></html>");
 	informationsPane.removeAll();

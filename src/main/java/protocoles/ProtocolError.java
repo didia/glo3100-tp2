@@ -6,6 +6,10 @@ public class ProtocolError extends RuntimeException {
 	super(message);
     }
 
+    public ProtocolError(Exception e) {
+	super(e);
+    }
+
     /**
      * 
      */

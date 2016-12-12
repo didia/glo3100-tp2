@@ -5,14 +5,14 @@ import java.util.Optional;
 import app.Crypto;
 import app.EtapeProtocole;
 import app.ProtocoleTypes;
+import app.User;
 import client.ClientController;
 import pirate.PirateController;
-import serveur.Client;
 import serveur.ServeurController;
 
 public class NTLMProtocole extends BaseProtocole {
 
-    private Client currentClient = null;
+    private User currentClient = null;
 
     public NTLMProtocole(ServeurController serveur, ClientController client, PirateController pirate, Crypto crypto) {
 	super(serveur, client, pirate, crypto);
@@ -60,10 +60,6 @@ public class NTLMProtocole extends BaseProtocole {
 	client.setCookie("NC", nc);
 	client.setCookie("EXPECTED-NC-HASH", getNxHash(sessionID, nc, password));
 	return String.format("%s %s %s", client.getCookie("SESSION_ID"), nsHash, nc);
-    }
-
-    private String getNxHash(String sessionID, String ns, String password) {
-	return crypto.h1(String.format("%s.%s.%s", sessionID, ns, crypto.h2(password)));
     }
 
     private String genereSessionID(String[] messageParts) {
@@ -153,11 +149,11 @@ public class NTLMProtocole extends BaseProtocole {
     }
 
     private String genereNSPourSession(String[] messageParts) {
-	Optional<Client> client = serveur.reqClientParID(reqProtocoleType(), messageParts[1]);
-	if (!client.isPresent()) {
+	Optional<User> user = serveur.reqClientParID(reqProtocoleType(), messageParts[1]);
+	if (!user.isPresent()) {
 	    return "401";
 	}
-	currentClient = client.get();
+	currentClient = user.get();
 	sessionMap.put(messageParts[0], crypto.random5Digits());
 	return String.format("%s %s", messageParts[0], sessionMap.get(messageParts[0]));
     }

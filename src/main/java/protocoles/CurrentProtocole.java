@@ -50,6 +50,7 @@ public class CurrentProtocole implements Protocole {
 	    currentProtocole = new NTLMProtocole(serveurController, clientController, pirateController, crypto);
 	    break;
 	case UAF:
+	    currentProtocole = new UAFProtocole(serveurController, clientController, pirateController, crypto);
 	    break;
 	default:
 	    break;

@@ -6,15 +6,16 @@ import java.util.Optional;
 import app.EtapeProtocole;
 import app.Protocole;
 import app.ProtocoleTypes;
+import app.User;
 
 public class ServeurController {
 
-    private ClientRepository repository;
+    private ServeurRepository repository;
     private Protocole protocole;
     private ServeurUI ui;
     private String dernierMessageRecu = null;
 
-    public ServeurController(ClientRepository repository) {
+    public ServeurController(ServeurRepository repository) {
 	this.repository = repository;
     }
 
@@ -23,14 +24,14 @@ public class ServeurController {
     }
 
     public void enregistreUtilisateur(String userID, String nom, String passkey, ProtocoleTypes typeProtocole) {
-	Client client = new Client(nom, userID, passkey);
-	this.repository.addClient(typeProtocole, client);
+	User user = new User(nom, userID, passkey);
+	this.repository.addClient(typeProtocole, user);
     }
 
     public void afficheClients() {
-	List<Client> clients = this.repository.getAllClients(protocole.reqProtocoleType());
+	List<User> users = this.repository.getAllClients(protocole.reqProtocoleType());
 	if (ui != null) {
-	    ui.afficheClients(clients);
+	    ui.afficheClients(users);
 	}
     }
 
@@ -58,6 +59,10 @@ public class ServeurController {
 	envoyerDernierMessageRecu(EtapeProtocole.T2);
     }
 
+    public void executeT4() {
+	envoyerDernierMessageRecu(EtapeProtocole.T4);
+    }
+
     private void envoyerDernierMessageRecu(EtapeProtocole etape) {
 	if (dernierMessageRecu != null) {
 	    protocole.executeEtape(etape, dernierMessageRecu);
@@ -66,7 +71,7 @@ public class ServeurController {
 	}
     }
 
-    public Optional<Client> reqClientParID(ProtocoleTypes protocole, String userId) {
+    public Optional<User> reqClientParID(ProtocoleTypes protocole, String userId) {
 	return repository.getClient(protocole, userId);
     }
 

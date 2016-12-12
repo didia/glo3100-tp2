@@ -8,12 +8,13 @@ import java.awt.Insets;
 import javax.swing.JFrame;
 
 import client.ClientController;
+import client.ClientRepository;
 import client.ClientUI;
 import pirate.PirateController;
 import pirate.PirateUI;
 import protocoles.CurrentProtocole;
-import serveur.ClientRepository;
 import serveur.ServeurController;
+import serveur.ServeurRepository;
 import serveur.ServeurUI;
 
 public class Application {
@@ -44,10 +45,11 @@ public class Application {
      * Create the application.
      */
     public Application() {
-	ClientRepository repository = new ClientRepository();
+	ServeurRepository serveurRepository = new ServeurRepository();
+	ClientRepository clientRepository = new ClientRepository();
 
-	ServeurController serveurController = new ServeurController(repository);
-	ClientController clientController = new ClientController();
+	ServeurController serveurController = new ServeurController(serveurRepository);
+	ClientController clientController = new ClientController(clientRepository);
 	PirateController pirateController = new PirateController();
 	CurrentProtocole protocole = new CurrentProtocole(serveurController, clientController, pirateController,
 		DEFAULT_PROTOCOL_TYPE);

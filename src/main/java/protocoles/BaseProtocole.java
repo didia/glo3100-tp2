@@ -26,6 +26,10 @@ public abstract class BaseProtocole implements Protocole {
 	this.pirate = pirate;
     }
 
+    protected String getNxHash(String sessionID, String ns, String password) {
+	return crypto.h1(String.format("%s.%s.%s", sessionID, ns, crypto.h2(password)));
+    }
+
     @Override
     public abstract void executeEtape(EtapeProtocole etape, String message);
 

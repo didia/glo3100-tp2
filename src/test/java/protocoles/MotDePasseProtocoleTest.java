@@ -6,12 +6,12 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 
+import app.User;
 import app.Crypto;
 import app.EtapeProtocole;
 import app.ProtocoleTypes;
 import client.ClientController;
 import pirate.PirateController;
-import serveur.Client;
 import serveur.ServeurController;
 
 public class MotDePasseProtocoleTest {
@@ -90,7 +90,7 @@ public class MotDePasseProtocoleTest {
 
     private void givenClientAvecIDetPasswordExiste() {
 	Mockito.when(serveur.reqClientParID(protocole.reqProtocoleType(), USER_ID))
-		.thenReturn(Optional.of(new Client(USER_ID, NOM, HASHED_PASSWORD)));
+		.thenReturn(Optional.of(new User(USER_ID, NOM, HASHED_PASSWORD)));
     }
 
 }

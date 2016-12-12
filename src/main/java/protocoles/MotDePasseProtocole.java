@@ -2,12 +2,12 @@ package protocoles;
 
 import java.util.Optional;
 
+import app.User;
 import app.Crypto;
 import app.EtapeProtocole;
 import app.ProtocoleTypes;
 import client.ClientController;
 import pirate.PirateController;
-import serveur.Client;
 import serveur.ServeurController;
 
 public class MotDePasseProtocole extends BaseProtocole {
@@ -72,8 +72,8 @@ public class MotDePasseProtocole extends BaseProtocole {
     }
 
     private String executeAuthentification(String[] messageParts) {
-	Optional<Client> client = serveur.reqClientParID(reqProtocoleType(), messageParts[1]);
-	if (!(client.isPresent() && crypto.h1(messageParts[2]).equals(client.get().passKey))) {
+	Optional<User> user = serveur.reqClientParID(reqProtocoleType(), messageParts[1]);
+	if (!(user.isPresent() && crypto.h1(messageParts[2]).equals(user.get().passKey))) {
 	    return "401";
 	}
 	sessionMap.put(messageParts[0], crypto.random5Digits());
