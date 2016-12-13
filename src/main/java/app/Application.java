@@ -24,6 +24,7 @@ public class Application {
     private PirateUI pirate;
     private ServeurUI serveur;
     private final ProtocoleTypes DEFAULT_PROTOCOL_TYPE = ProtocoleTypes.MOT_DE_PASSE;
+    private final String SERVEUR_REPOSITORY_FILE = "serveur.json";
 
     /**
      * Launch the application.
@@ -45,7 +46,7 @@ public class Application {
      * Create the application.
      */
     public Application() {
-	ServeurRepository serveurRepository = new ServeurRepository();
+	ServeurRepository serveurRepository = new ServeurRepository(SERVEUR_REPOSITORY_FILE);
 	ClientRepository clientRepository = new ClientRepository();
 
 	ServeurController serveurController = new ServeurController(serveurRepository);
